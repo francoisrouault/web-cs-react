@@ -1,18 +1,40 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import csLight from './cs-light.png';
+import csDark from './cs-dark.png';
 import './App.css';
+import Logo from './Logo.js';
+
+const darkColor = '#1b1b1b';
+const lightColor = '#ffffff';
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { isThemeLight: false };
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(e) {
+    e.preventDefault();
+    this.setState(prevState => ({
+      isThemeLight: !prevState.isThemeLight
+    }));
+  }
+
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+    const isThemeLight = this.state.isThemeLight;
+    document.body.style.backgroundColor = isThemeLight ? lightColor: darkColor;
+
+    var buttonStyle = {
+      background: isThemeLight ? darkColor : lightColor,
+    };
+    // var buttonClassName = this.state.isThemeLight ? "App-Button-Light" : "App-Button-Dark";
+
+    return (  
+      <div>
+        <a href="#" className={"App-Button"} style={buttonStyle} onClick={this.handleClick}/>
+        <Logo src={this.state.isThemeLight ? csLight : csDark}/>
       </div>
     );
   }
